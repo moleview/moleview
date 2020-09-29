@@ -22,5 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-if __name__ == "__main__":
-    pass
+import sys
+import re
+import pprint
+
+### Read xyz file
+
+f = open(sys.argv[1], 'r')
+lines = f.read().split("\n")
+f.close()
+
+num_atoms = int(lines[0])
+print(num_atoms)
+coords = []
+sp = []
+
+### Compile regex
+coord_patt = re.compile(
+    r"(\w+)\s+([0-9\-\+\.*^eEdD]+)\s+([0-9\-\+\.*^eEdD]+)\s+"
+    r"([0-9\-\+\.*^eEdD]+)")
+### Extract xyz
+for i in range(2, 2 + num_atoms):
+    m = coord_patt.search(lines[i])
+    if m:
+        sp.append(m.group(1))  # this is 1-indexed
+        # this is 0-indexed
+        # in case of 0.0D+00 or 0.00d+01 old double precision writing
+        # replace d or D by e for ten power exponent,
+        # and some files use *^ convention in place of e
+        xyz = [val.lower().replace("d", "e").replace('*^', 'e') for val
+               in m.groups()[1:4]]
+        coords.append([float(val) for val in xyz])
+
+pprint.pprint(coords)
+
