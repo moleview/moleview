@@ -31,11 +31,12 @@ SOFTWARE.
 import sys
 import re
 import pprint
-from octadist import DrawComplex
+
+from draw import DrawComplex
 
 # Read xyz file
 
-f = open(sys.argv[1], 'r')
+f = open(sys.argv[1], "r")
 lines = f.read().split("\n")
 f.close()
 
@@ -44,16 +45,13 @@ atoms = []
 coords = []
 
 # Compile regex
-coord_patt = re.compile(
-    r"(\w+)\s+([0-9\-\+\.*^eEdD]+)\s+([0-9\-\+\.*^eEdD]+)\s+"
-    r"([0-9\-\+\.*^eEdD]+)")
+coord_patt = re.compile(r"(\w+)\s+([0-9\-\+\.*^eEdD]+)\s+([0-9\-\+\.*^eEdD]+)\s+" r"([0-9\-\+\.*^eEdD]+)")
 # Extract xyz
 for i in range(2, 2 + num_atoms):
     m = coord_patt.search(lines[i])
     if m:
         atoms.append(m.group(1))
-        xyz = [val.lower().replace("d", "e").replace('*^', 'e') for val
-               in m.groups()[1:4]]
+        xyz = [val.lower().replace("d", "e").replace("*^", "e") for val in m.groups()[1:4]]
         coords.append([float(val) for val in xyz])
 
 # pprint.pprint(atoms)
@@ -64,8 +62,6 @@ mol.add_atom()
 mol.add_bond()
 mol.add_legend()
 mol.config_plot(
-    show_title=True,
-    show_axis=True,
-    show_grid=True,
+    show_title=True, show_axis=True, show_grid=True,
 )
 mol.show_plot()
