@@ -11,18 +11,21 @@ pip install moleview
 **Requirements**
 - Python 3
 - NumPy
+- SciPy
 - Matplotlib
+
+All packages can be installed easily by `conda` or `pip`.
 
 ## Usage
 
 ```sh
-moleview YOUR_COMPUTATIONAL_CHEMISTRY_FILE
+moleview benzene.xyz
 ```
-
-## Author
-
-Rangsiman Ketkaew - PhD student at UZH, Switzerland.
 
 ## Development
 
-All pull requests are welcome.
+All pull requests, issues, comments and suggestions are welcome.
+
+## Author
+
+Rangsiman Ketkaew : rangsiman1993@gmail.com
