@@ -229,8 +229,7 @@ class DrawComplex:
         if not self.show_grid:
             self.ax.grid(False)
 
-    @staticmethod
-    def save_img(save="Complex_saved_by_OctaDist", file="png"):
+    def save_img(self, save="Complex_saved_by_OctaDist", file="png"):
         """
         Save figure as an image.
 
@@ -246,8 +245,7 @@ class DrawComplex:
         """
         plt.savefig(f"{save}.{file}")
 
-    @staticmethod
-    def show_plot():
+    def show_plot(self):
         """
         Show plot.
 
