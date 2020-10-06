@@ -32,12 +32,12 @@ import argparse
 import re
 import pprint
 
-from draw import DrawComplex
+from .draw import DrawComplex
 
-if __name__ == "__main__":
-
+def main():
     # Read xyz file
-    parser = argparse.ArgumentParser(description='Moleview: view your molecule anywhere and anytime!')
+    description = "MoleView: view your molecule anywhere and anytime."
+    parser = argparse.ArgumentParser(description=description)
     parser.add_argument('input', metavar='INPUT', type=str, help='Coordinate of molecule in XYZ format (.xyz)')
 
     args = parser.parse_args()
@@ -71,3 +71,8 @@ if __name__ == "__main__":
         show_title=True, show_axis=True, show_grid=True,
     )
     mol.show_plot()
+
+
+if __name__ == "__main__":
+    main()
+    

@@ -26,7 +26,7 @@ from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
-from atom import check_atom, check_radii, check_color, find_bonds
+from .atom import check_atom, check_radii, check_color, find_bonds
 
 
 class DrawComplex:
