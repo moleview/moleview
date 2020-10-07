@@ -31,12 +31,12 @@ from .atom import check_atom, check_radii, check_color, find_bonds
 
 class DrawComplex:
     """
-    Display 3D structure of octahedral complex with label for each atoms.
+    Display 3D structure of a given coordinate with label for each atoms.
 
     Parameters
     ----------
     atom : list, None
-        Atomic symbols of octahedral structure.
+        Atomic symbols of molecule.
     coord : list, array, tuple, bool, None
         Atomic coordinates of octahedral structure.
     cutoff_global : int or float
@@ -138,7 +138,7 @@ class DrawComplex:
 
         See Also
         --------
-        octadist.src.util.find_bonds : Find atomic bonds.
+        util.find_bonds : Find atomic bonds.
 
         """
         _, self.bond_list = find_bonds(self.atom, self.coord, self.cutoff_global, self.cutoff_hydrogen)
@@ -229,7 +229,7 @@ class DrawComplex:
         if not self.show_grid:
             self.ax.grid(False)
 
-    def save_img(self, save="Complex_saved_by_OctaDist", file="png"):
+    def save_img(self, save="Complex_saved_by_MoleView", file="png"):
         """
         Save figure as an image.
 
@@ -237,7 +237,7 @@ class DrawComplex:
         ----------
         save : str
             Name of image file.
-            Default value is "Complex_saved_by_OctaDist".
+            Default value is "Complex_saved_by_MoleView".
         file : file
             Image type.
             Default value is "png".
