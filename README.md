@@ -36,8 +36,10 @@ Screenshots of program:
 
 What you can help improve MoleView :)
 
-- Visualizing a alrge molecule in matplotlib is still slow. It would be great you can make it faster.
+- Visualization of a large molecule in matplotlib is still slow. It would be great if we can make it faster.
 - Is it possible to make MoleView displays animation of a trajectory file that contains a number of structures? 
+- Is it possible to speed up the performance using GPU? 
+- It would be very great if MoleView can visualize wafefunction properties such as molecular orbitals, density, ...
 
 All pull requests, issues, comments and suggestions are welcome.
 
