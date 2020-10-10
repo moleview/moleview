@@ -1,4 +1,4 @@
-# moleview
+# MoleView
 Molecule + Viewer = MoleView <br/>
 View your molecule anywhere and anytime!
 
@@ -13,8 +13,6 @@ pip install moleview
 - NumPy
 - SciPy
 - Matplotlib
-
-All packages can be installed easily by `conda` or `pip`.
 
 ## Usage
 
@@ -35,6 +33,11 @@ Screenshots of program:
 [ss_3]: https://raw.githubusercontent.com/moleview/moleview/master/img/c180.png
 
 ## Development
+
+What you can help improve MoleView :)
+
+- Visualizing a alrge molecule in matplotlib is still slow. It would be great you can make it faster.
+- Is it possible to make MoleView displays animation of a trajectory file that contains a number of structures? 
 
 All pull requests, issues, comments and suggestions are welcome.
 
