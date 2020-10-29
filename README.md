@@ -1,4 +1,4 @@
-# MoleView: A fast and lightweight plug-in for 3D molecular visualization
+# MoleView: A Fast and lightweight plug-in for 3D molecular visualization
 
 Molecule + Viewer = MoleView <br/>
 View your molecule anywhere and anytime!
