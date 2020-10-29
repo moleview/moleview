@@ -45,12 +45,12 @@ All pull requests, issues, comments and suggestions are welcome.
 
 ## Support and Citation
 ```
-@MISC {Moleview2020,
+@software{Moleview2020,
     author = "Rangsiman Ketkaew",
     title  = "MoleView: A fast and lightweight plug-in for 3D molecular visualization",
     month  = "oct",
     year   = "2020",
-    note   = "https://github.com/moleview/moleview"
+    url   = "https://github.com/moleview/moleview"
 }
 ```
 
