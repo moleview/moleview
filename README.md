@@ -43,6 +43,17 @@ What you can help improve MoleView :)
 
 All pull requests, issues, comments and suggestions are welcome.
 
+## Support and Citation
+```
+@MISC {Moleview2020,
+    author = "Rangsiman Ketkaew",
+    title  = "MoleView: A fast and lightweight plug-in for 3D molecular visualization",
+    month  = "oct",
+    year   = "2020",
+    note   = "https://github.com/moleview/moleview"
+}
+```
+
 ## Author
 
 Rangsiman Ketkaew : rangsiman1993@gmail.com
