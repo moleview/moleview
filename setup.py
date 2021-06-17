@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="moleview", # Replace with your own username
-    version="1.0",
+    version="1.1",
     author="Rangsiman Ketkaew",
     author_email="rangsiman1993@gmail.com",
     description="A small example package",
@@ -30,7 +30,7 @@ setuptools.setup(
     zip_safe=False,
     entry_points={
         "console_scripts": [
-            "moleview=src.moleview:main"
+            "moleview=moleview.src.moleview:main"
         ]
     },
 )
