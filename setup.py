@@ -8,7 +8,7 @@ setuptools.setup(
     version="1.1",
     author="Rangsiman Ketkaew",
     author_email="rangsiman1993@gmail.com",
-    description="A small example package",
+    description="MoleView: view your molecule anywhere and anytime.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/moleview/moleview",
