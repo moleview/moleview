@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="moleview", # Replace with your own username
-    version="1.1",
+    version="1.2",
     author="Rangsiman Ketkaew",
     author_email="rangsiman1993@gmail.com",
     description="MoleView: view your molecule anywhere and anytime.",
