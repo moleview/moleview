@@ -152,7 +152,7 @@ class DrawComplex:
         for i in range(len(self.atoms_pair)):
             merge = list(zip(self.atoms_pair[i][0], self.atoms_pair[i][1]))
             x, y, z = merge
-            self.ax.plot(x, y, z, "k-", color="black", linewidth=2)
+            self.ax.plot(x, y, z, color="black", linewidth=2)
 
     def add_legend(self):
         """
