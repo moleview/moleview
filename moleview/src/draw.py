@@ -93,7 +93,7 @@ class DrawComplex:
 
         """
         self.fig = plt.figure()
-        self.ax = Axes3D(self.fig)
+        self.ax = self.fig.add_subplot(projection='3d')
 
         self.ax.set_title("Full complex", fontsize="12")
         # ax = fig.add_subplot(111, projection='3d')
