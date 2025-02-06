@@ -93,7 +93,7 @@ class DrawComplex:
 
         """
         self.fig = plt.figure()
-        self.ax = Axes3D(self.fig)
+        self.ax = self.fig.add_subplot(projection='3d')
 
         self.ax.set_title("Full complex", fontsize="12")
         # ax = fig.add_subplot(111, projection='3d')
@@ -152,7 +152,7 @@ class DrawComplex:
         for i in range(len(self.atoms_pair)):
             merge = list(zip(self.atoms_pair[i][0], self.atoms_pair[i][1]))
             x, y, z = merge
-            self.ax.plot(x, y, z, "k-", color="black", linewidth=2)
+            self.ax.plot(x, y, z, color="black", linewidth=2)
 
     def add_legend(self):
         """
