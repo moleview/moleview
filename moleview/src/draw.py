@@ -23,15 +23,16 @@ SOFTWARE.
 """
 
 from matplotlib import pyplot as plt
+import plotly.graph_objects as go
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 from .atom import check_atom, check_radii, check_color, find_bonds
 
 
-class DrawComplex:
+class DrawComplex_matplotlib:
     """
-    Display 3D structure of octahedral complex with label for each atoms.
+    Display 3D structure of octahedral complex with label for each atoms using Matplotlib.
 
     Parameters
     ----------
@@ -56,10 +57,11 @@ class DrawComplex:
                  [0.539005000, 4.482809000, 8.460004000],
                  [2.812425000, 3.266553000, 8.131637000],
                  [2.886404000, 5.392925000, 9.848966000]]
-    >>> test = DrawComplex(atom=atom, coord=coord)
+    >>> test =  DrawComplex_matplotlib(atom=atom, coord=coord)
     >>> test.add_atom()
     >>> test.add_bond()
     >>> test.add_legend()
+    >>> test.config_plot(show_title=True, show_axis=True, show_grid=True)
     >>> test.show_plot()
 
     """
@@ -260,3 +262,162 @@ class DrawComplex:
 
         """
         plt.show()
+
+
+class DrawComplex_plotly:
+    """
+    Display 3D structure of octahedral complex using Plotly.
+
+    Parameters
+    ----------
+    atom : list, None
+        Atomic symbols of octahedral structure.
+    coord : list, array, tuple, bool, None
+        Atomic coordinates of octahedral structure.
+    cutoff_global : int or float
+        Global cutoff for screening bonds.
+        Default value is 2.0.
+    cutoff_hydrogen : int or float
+        Cutoff for screening hydrogen bonds.
+        Default value is 1.2.
+
+    Examples
+    --------
+    >>> atom = ['Fe', 'N', 'N', 'N', 'O', 'O', 'O']
+    >>> coord = [[2.298354000, 5.161785000, 7.971898000],
+                 [1.885657000, 4.804777000, 6.183726000],
+                 [1.747515000, 6.960963000, 7.932784000],
+                 [4.094380000, 5.807257000, 7.588689000],
+                 [0.539005000, 4.482809000, 8.460004000],
+                 [2.812425000, 3.266553000, 8.131637000],
+                 [2.886404000, 5.392925000, 9.848966000]]
+    >>> test =  DrawComplex_plotly(atom=atom, coord=coord)
+    >>> test.add_atom()
+    >>> test.add_bond()
+    >>> test.add_legend()
+    >>> test.config_plot(show_title=True, show_axis=True, show_grid=True)
+    >>> test.show_plot()
+    
+    """
+
+    def __init__(self, atom=None, coord=None, cutoff_global=2.0, cutoff_hydrogen=1.2):
+        self.atom = atom
+        self.coord = coord
+        self.cutoff_global = cutoff_global
+        self.cutoff_hydrogen = cutoff_hydrogen
+
+        if self.atom is None:
+            raise TypeError("atom is not specified")
+        if self.coord is None:
+            raise TypeError("coord is not specified")
+
+        self.bond_list = []
+        self.start_plot()
+
+    def start_plot(self):
+        """
+        Introduce figure to plot.
+        """
+        self.fig = go.Figure()
+        self.fig.update_layout(title="Full complex")
+
+    def add_atom(self):
+        """
+        Add all atoms to show in figure.
+        """
+        # Group atoms by element to create single trace per element type
+        atoms_data = {}
+        for i, symbol in enumerate(self.atom):
+            if symbol not in atoms_data:
+                atoms_data[symbol] = {"x": [], "y": [], "z": []}
+            atoms_data[symbol]["x"].append(self.coord[i][0])
+            atoms_data[symbol]["y"].append(self.coord[i][1])
+            atoms_data[symbol]["z"].append(self.coord[i][2])
+
+        for symbol, data in atoms_data.items():
+            n = check_atom(symbol)
+            # Scaling factor for size in plotly vs matplotlib might differ
+            size = check_radii(n) * 30
+            color = check_color(n)
+
+            self.fig.add_trace(
+                go.Scatter3d(
+                    x=data["x"],
+                    y=data["y"],
+                    z=data["z"],
+                    mode="markers",
+                    name=symbol,
+                    marker=dict(
+                        size=size,
+                        color=color,
+                        line=dict(width=2, color="DarkSlateGrey"),
+                    ),
+                    text=[symbol for _ in range(len(data["x"]))],
+                    hovertemplate="%{text}<extra></extra>",
+                )
+            )
+
+    def add_bond(self):
+        """
+        Calculate bond distance, screen bond, and add them to show in figure.
+        """
+        _, self.bond_list = find_bonds(
+            self.atom, self.coord, self.cutoff_global, self.cutoff_hydrogen
+        )
+
+        x_lines = []
+        y_lines = []
+        z_lines = []
+
+        for bond in self.bond_list:
+            start_atom, end_atom = bond
+            x_lines.extend([start_atom[0], end_atom[0], None])
+            y_lines.extend([start_atom[1], end_atom[1], None])
+            z_lines.extend([start_atom[2], end_atom[2], None])
+
+        self.fig.add_trace(
+            go.Scatter3d(
+                x=x_lines,
+                y=y_lines,
+                z=z_lines,
+                mode="lines",
+                name="Bond",
+                line=dict(color="black", width=3),
+                showlegend=False,
+            )
+        )
+
+    def add_legend(self):
+        """
+        Add atoms legend to show in figure.
+        Plotly handles legend automatically based on trace names.
+        """
+        self.fig.update_layout(showlegend=True, legend=dict(itemsizing="constant"))
+
+    def config_plot(self, show_title=True, show_axis=True, show_grid=True, **kwargs):
+        """
+        Setting configuration for figure.
+        """
+        title_text = kwargs.get("title_name", "Full complex")
+
+        layout_update = {}
+
+        if show_title:
+            layout_update["title"] = title_text
+        else:
+            layout_update["title"] = ""
+
+        scene = dict(
+            xaxis=dict(visible=show_axis, showgrid=show_grid, title="X"),
+            yaxis=dict(visible=show_axis, showgrid=show_grid, title="Y"),
+            zaxis=dict(visible=show_axis, showgrid=show_grid, title="Z"),
+        )
+
+        layout_update["scene"] = scene
+        self.fig.update_layout(**layout_update)
+
+    def show_plot(self):
+        """
+        Show plot.
+        """
+        self.fig.show()

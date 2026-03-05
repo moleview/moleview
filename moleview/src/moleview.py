@@ -34,17 +34,34 @@ SOFTWARE.
 import argparse
 import re
 
-from .draw import DrawComplex
+from .draw import DrawComplex_matplotlib, DrawComplex_plotly
 
-def visualize(atom, coord):
-    """Visualize molecule
+
+def visualize_matplotlib(atom, coord):
+    """Visualize molecule with Matplotlib
 
     Args:
         atom (list): Atomic symbol
         coord (array): Cartesian coordinate
     """
 
-    mol = DrawComplex(atom=atom, coord=coord)
+    mol = DrawComplex_matplotlib(atom=atom, coord=coord)
+    mol.add_atom()
+    mol.add_bond()
+    mol.add_legend()
+    mol.config_plot(show_title=True, show_axis=True, show_grid=True)
+    mol.show_plot()
+
+
+def visualize_plotly(atom, coord):
+    """Visualize molecule with Plotly
+
+    Args:
+        atom (list): Atomic symbol
+        coord (array): Cartesian coordinate
+    """
+
+    mol = DrawComplex_plotly(atom=atom, coord=coord)
     mol.add_atom()
     mol.add_bond()
     mol.add_legend()
@@ -56,7 +73,17 @@ def main():
     # Read xyz file
     description = "MoleView: view your molecule anywhere and anytime."
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('input', metavar='INPUT', type=str, help='Coordinate of molecule in XYZ format (.xyz)')
+    parser.add_argument(
+        "input",
+        metavar="INPUT",
+        type=str,
+        help="Coordinate of molecule in XYZ format (.xyz)",
+    )
+    parser.add_argument(
+        "--plotly",
+        action="store_true",
+        help="Use Plotly backend",
+    )
 
     args = parser.parse_args()
     f = open(args.input, "r")
@@ -69,18 +96,26 @@ def main():
     coords = []
 
     # Compile regex
-    coord_patt = re.compile(r"(\w+)\s+([0-9\-\+\.*^eEdD]+)\s+([0-9\-\+\.*^eEdD]+)\s+" r"([0-9\-\+\.*^eEdD]+)")
+    coord_patt = re.compile(
+        r"(\w+)\s+([0-9\-\+\.*^eEdD]+)\s+([0-9\-\+\.*^eEdD]+)\s+"
+        r"([0-9\-\+\.*^eEdD]+)"
+    )
     # Extract xyz
     for i in range(2, 2 + num_atoms):
         m = coord_patt.search(lines[i])
         if m:
             atoms.append(m.group(1))
-            xyz = [val.lower().replace("d", "e").replace("*^", "e") for val in m.groups()[1:4]]
+            xyz = [
+                val.lower().replace("d", "e").replace("*^", "e")
+                for val in m.groups()[1:4]
+            ]
             coords.append([float(val) for val in xyz])
 
-    visualize(atoms, coords)
+    if args.plotly:
+        visualize_plotly(atoms, coords)
+    else:
+        visualize_matplotlib(atoms, coords)
 
 
 if __name__ == "__main__":
     main()
-    
