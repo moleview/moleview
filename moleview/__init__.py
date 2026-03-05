@@ -27,5 +27,5 @@ __doc__ = "MoleView: view your molecule anywhere and anytime!"
 __authors__ = "Rangsiman Ketkaew"
 
 from .src import draw
-from .src.draw import DrawComplex
-from .src.moleview import visualize
+from .src.draw import DrawComplex_matplotlib, DrawComplex_plotly
+from .src.moleview import visualize_matplotlib
