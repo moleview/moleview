@@ -93,7 +93,7 @@ class DrawComplex:
 
         """
         self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(projection='3d')
+        self.ax = self.fig.add_subplot(projection="3d")
 
         self.ax.set_title("Full complex", fontsize="12")
         # ax = fig.add_subplot(111, projection='3d')
@@ -141,7 +141,9 @@ class DrawComplex:
         octadist.src.util.find_bonds : Find atomic bonds.
 
         """
-        _, self.bond_list = find_bonds(self.atom, self.coord, self.cutoff_global, self.cutoff_hydrogen)
+        _, self.bond_list = find_bonds(
+            self.atom, self.coord, self.cutoff_global, self.cutoff_hydrogen
+        )
 
         for i in range(len(self.bond_list)):
             get_atoms = self.bond_list[i]
@@ -175,11 +177,18 @@ class DrawComplex:
             if label not in label_list:
                 handle_list.append(handle)
                 label_list.append(label)
-        leg = plt.legend(handle_list, label_list, loc="lower left", scatterpoints=1, fontsize=12)
+        leg = plt.legend(
+            handle_list,
+            label_list,
+            loc="lower left",
+            bbox_to_anchor=(-0.2, 0),
+            scatterpoints=1,
+            fontsize=12,
+        )
 
         # fix size of point in legend
-        for i in range(len(leg.legendHandles)):
-            leg.legendHandles[i]._sizes = [90]
+        for i in range(len(leg.legend_handles)):
+            leg.legend_handles[i]._sizes = [90]
 
     def config_plot(self, show_title=True, show_axis=True, show_grid=True, **kwargs):
         """

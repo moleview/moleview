@@ -33,7 +33,6 @@ SOFTWARE.
 
 import argparse
 import re
-import pprint
 
 from .draw import DrawComplex
 
