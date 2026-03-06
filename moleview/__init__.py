@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-__version__ = "1.1"
-__doc__ = "MoleView: view your molecule anywhere and anytime!"
+__version__ = "1.2"
+__doc__ = "MoleView: A Fast and lightweight plug-in for 3D molecular visualization"
 __authors__ = "Rangsiman Ketkaew"
 
 from .src import draw

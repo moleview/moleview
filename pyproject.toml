@@ -1,10 +1,10 @@
 [project]
 name = "moleview"
-version = "1.2.0"
+version = "1.2"
 authors = [
   { name="Rangsiman Ketkaew", email="rangsiman1993@gmail.com" },
 ]
-description = "MoleView: A Fast and lightweight plug-in for 3D molecular visualization "
+description = "MoleView: A Fast and lightweight plug-in for 3D molecular visualization"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
