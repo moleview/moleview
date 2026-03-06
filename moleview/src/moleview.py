@@ -24,12 +24,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-######### USAGE ###################
-# $ moleview.py YOUR.xyz
+######### USAGE #########
+#
+# $ moleview YOUR.xyz [--plotly]
+#
 # -- or --
+#
 # import moleview
 # moleview.visualize(atom, coord)
-##########################
+#
+#########################
 
 import argparse
 import re
