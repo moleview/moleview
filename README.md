@@ -1,3 +1,5 @@
+![PyPI - Version](https://img.shields.io/pypi/v/moleview) ![PyPI - Downloads](https://img.shields.io/pypi/dm/moleview)
+
 # MoleView: A Fast and lightweight plug-in for 3D molecular visualization
 
 Molecule + Viewer = MoleView <br/>
