@@ -1,0 +1,19 @@
+[project]
+name = "moleview"
+version = "1.2.0"
+authors = [
+  { name="Rangsiman Ketkaew", email="rangsiman1993@gmail.com" },
+]
+description = "MoleView: A Fast and lightweight plug-in for 3D molecular visualization "
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/moleview/moleview"
+Issues = "https://github.com/moleview/moleview/issues"
