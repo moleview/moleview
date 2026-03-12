@@ -37,11 +37,15 @@ Screenshots of program:
 
 | ![][ss_1]     | ![][ss_2]          | ![][ss_3]     |
 |:-------------:|:------------------:|:-------------:|
+| ![][ss_4]     | ![][ss_5]          | ![][ss_6]     |
 | Aspirin       | Alanine tripeptide |      C180     |
 
 [ss_1]: https://raw.githubusercontent.com/moleview/moleview/master/img/aspirin.png
 [ss_2]: https://raw.githubusercontent.com/moleview/moleview/master/img/alanine-tripeptide.png
 [ss_3]: https://raw.githubusercontent.com/moleview/moleview/master/img/c180.png
+[ss_4]: https://raw.githubusercontent.com/moleview/moleview/master/img/aspirin-plotly.png
+[ss_5]: https://raw.githubusercontent.com/moleview/moleview/master/img/alanine-tripeptide-plotly.png
+[ss_6]: https://raw.githubusercontent.com/moleview/moleview/master/img/c180-plotly.png
 
 ## Development
 
