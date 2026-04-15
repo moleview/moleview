@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 from matplotlib import pyplot as plt
+import numpy as np
 import plotly.graph_objects as go
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
@@ -71,6 +72,7 @@ class DrawComplex_matplotlib:
         self.coord = coord
         self.cutoff_global = cutoff_global
         self.cutoff_hydrogen = cutoff_hydrogen
+        self.sphere_resolution = 20
 
         if self.atom is None:
             raise TypeError("atom is not specified")
@@ -297,7 +299,7 @@ class DrawComplex_plotly:
     >>> test.add_legend()
     >>> test.config_plot(show_title=True, show_axis=True, show_grid=True)
     >>> test.show_plot()
-    
+
     """
 
     def __init__(self, atom=None, coord=None, cutoff_global=2.0, cutoff_hydrogen=1.2):
@@ -305,6 +307,7 @@ class DrawComplex_plotly:
         self.coord = coord
         self.cutoff_global = cutoff_global
         self.cutoff_hydrogen = cutoff_hydrogen
+        self.sphere_resolution = 20
 
         if self.atom is None:
             raise TypeError("atom is not specified")
@@ -321,6 +324,16 @@ class DrawComplex_plotly:
         self.fig = go.Figure()
         self.fig.update_layout(title="Full complex")
 
+    def _generate_sphere_surface(self, center, radius):
+        """Generate Cartesian coordinates for a sphere surface."""
+        u = np.linspace(0, 2 * np.pi, self.sphere_resolution)
+        v = np.linspace(0, np.pi, self.sphere_resolution)
+
+        x = center[0] + radius * np.outer(np.cos(u), np.sin(v))
+        y = center[1] + radius * np.outer(np.sin(u), np.sin(v))
+        z = center[2] + radius * np.outer(np.ones(np.size(u)), np.cos(v))
+        return x, y, z
+
     def add_atom(self):
         """
         Add all atoms to show in figure.
@@ -336,26 +349,45 @@ class DrawComplex_plotly:
 
         for symbol, data in atoms_data.items():
             n = check_atom(symbol)
-            # Scaling factor for size in plotly vs matplotlib might differ
-            size = check_radii(n) * 30
+            radius = check_radii(n)
             color = check_color(n)
 
             self.fig.add_trace(
                 go.Scatter3d(
-                    x=data["x"],
-                    y=data["y"],
-                    z=data["z"],
+                    x=[data["x"][0]],
+                    y=[data["y"][0]],
+                    z=[data["z"][0]],
                     mode="markers",
                     name=symbol,
-                    marker=dict(
-                        size=size,
-                        color=color,
-                        line=dict(width=2, color="DarkSlateGrey"),
-                    ),
-                    text=[symbol for _ in range(len(data["x"]))],
-                    hovertemplate="%{text}<extra></extra>",
+                    legendgroup=symbol,
+                    visible="legendonly",
+                    marker=dict(size=10, color=color),
+                    hoverinfo="skip",
                 )
             )
+
+            for x_coord, y_coord, z_coord in zip(data["x"], data["y"], data["z"]):
+                x_sphere, y_sphere, z_sphere = self._generate_sphere_surface(
+                    (x_coord, y_coord, z_coord), radius
+                )
+
+                self.fig.add_trace(
+                    go.Surface(
+                        x=x_sphere,
+                        y=y_sphere,
+                        z=z_sphere,
+                        surfacecolor=np.ones_like(x_sphere),
+                        colorscale=[[0, color], [1, color]],
+                        cmin=0,
+                        cmax=1,
+                        showscale=False,
+                        name=symbol,
+                        legendgroup=symbol,
+                        showlegend=False,
+                        hovertemplate=f"{symbol}<extra></extra>",
+                        lighting=dict(ambient=0.55, diffuse=0.8, specular=0.25),
+                    )
+                )
 
     def add_bond(self):
         """
@@ -408,6 +440,7 @@ class DrawComplex_plotly:
             layout_update["title"] = ""
 
         scene = dict(
+            aspectmode="data",
             xaxis=dict(visible=show_axis, showgrid=show_grid, title="X"),
             yaxis=dict(visible=show_axis, showgrid=show_grid, title="Y"),
             zaxis=dict(visible=show_axis, showgrid=show_grid, title="Z"),
