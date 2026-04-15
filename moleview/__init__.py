@@ -28,4 +28,4 @@ __authors__ = "Rangsiman Ketkaew"
 
 from .src import draw
 from .src.draw import DrawComplex_matplotlib, DrawComplex_plotly
-from .src.moleview import visualize_matplotlib
+from .src.moleview import visualize_matplotlib, visualize_plotly

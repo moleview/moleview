@@ -41,12 +41,16 @@ import re
 from .draw import DrawComplex_matplotlib, DrawComplex_plotly
 
 
-def visualize_matplotlib(atom, coord):
+def visualize_matplotlib(atom, coord, show_plot=True):
     """Visualize molecule with Matplotlib
 
     Args:
         atom (list): Atomic symbol
         coord (array): Cartesian coordinate
+        show_plot (bool): If True, show the figure immediately.
+
+    Returns:
+        matplotlib.figure.Figure: Generated Matplotlib figure.
     """
 
     mol = DrawComplex_matplotlib(atom=atom, coord=coord)
@@ -54,15 +58,21 @@ def visualize_matplotlib(atom, coord):
     mol.add_bond()
     mol.add_legend()
     mol.config_plot(show_title=True, show_axis=True, show_grid=True)
-    mol.show_plot()
+    if show_plot:
+        mol.show_plot()
+    return mol.fig
 
 
-def visualize_plotly(atom, coord):
+def visualize_plotly(atom, coord, show_plot=True):
     """Visualize molecule with Plotly
 
     Args:
         atom (list): Atomic symbol
         coord (array): Cartesian coordinate
+        show_plot (bool): If True, show the figure immediately.
+
+    Returns:
+        plotly.graph_objects.Figure: Generated Plotly figure.
     """
 
     mol = DrawComplex_plotly(atom=atom, coord=coord)
@@ -70,7 +80,9 @@ def visualize_plotly(atom, coord):
     mol.add_bond()
     mol.add_legend()
     mol.config_plot(show_title=True, show_axis=True, show_grid=True)
-    mol.show_plot()
+    if show_plot:
+        mol.show_plot()
+    return mol.fig
 
 
 def main():
